@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Tickets.Models;
 
 namespace Tickets.Repositories
@@ -13,7 +10,5 @@ namespace Tickets.Repositories
         public void Update(int taskId, TicketModel ticket);
         public void Delete(int taskId);
         public IEnumerable<TicketModel> GetAll();
-
-
     }
 }

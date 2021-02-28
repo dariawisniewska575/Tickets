@@ -1,10 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Tickets.Models;
 using Tickets.Repositories;
 
@@ -12,8 +7,6 @@ namespace Tickets.Controllers
 {
     public class UserController : Controller
     {
-
-        
         private readonly ITicketRepository ticketRepository;
         public UserController(ITicketRepository ticketRepository)
         {
@@ -39,9 +32,6 @@ namespace Tickets.Controllers
         {
             ticketRepository.Add(ticketModel);
             return RedirectToAction(nameof(Index));
-
         }
-
-
     }
 }

@@ -1,10 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Tickets.Models;
 
-namespace Tickets.Models
+namespace Tickets.Data
 {
     public class TicketManagerContext : DbContext
     {

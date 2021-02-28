@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Tickets.Data;
 using Tickets.Models;
 
 namespace Tickets.Repositories
@@ -9,14 +9,13 @@ namespace Tickets.Repositories
     public class TicketRepository : ITicketRepository
     {
         private readonly TicketManagerContext context;
-        TicketModel ticketModel;
         public TicketRepository(TicketManagerContext context)
         {
             this.context = context;
         }
         public void Add(TicketModel ticket)
         {
-            ticket.Date = DateTime.Now;
+            ticket.Date = DateTime.Today;
             ticket.Status = "New";
             context.Tickets.Add(ticket);
             context.SaveChanges();
@@ -30,7 +29,7 @@ namespace Tickets.Repositories
             {
                 result.Title = ticket.Title;
                 result.Description = ticket.Description;
-                result.Date = ticket.Date;
+                result.Date = DateTime.Today;
                 result.Status = ticket.Status;
                 context.SaveChanges();
             }

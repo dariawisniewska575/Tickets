@@ -1,16 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Tickets.Data;
 using Tickets.Models;
@@ -30,24 +25,15 @@ namespace Tickets
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
             services.AddDbContext<ApplicationDbContext>(options =>
                options.UseSqlServer(
                    Configuration.GetConnectionString("DefaultConnection")));
-
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddDefaultUI()
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
            
-          
-            //Info about Passwords Strength
             services.Configure<IdentityOptions>(options =>
             {
                 // Password settings
@@ -67,17 +53,6 @@ namespace Tickets
                 options.User.RequireUniqueEmail = true;
             });
 
-            //The Account Login page's settings
-            services.ConfigureApplicationCookie(options =>
-            {
-                // Cookies settings
-                options.Cookie.HttpOnly = true;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
-                options.LoginPath = "/Account/Login"; // You can type here you own LoginPath, if you don't set custom path, ASP.NET Core will default to /Account/Login
-                options.LogoutPath = "/Account/Logout"; // You can type here you own LogoutPath, if you don't set custom path, ASP.NET Core will default to /Account/Logout
-                options.AccessDeniedPath = "/Account/AccessDenied"; // You can type you own AccesDeniedPath, if you don't set custom path, ASP.NET Core will default to /Account/AccessDenied;
-                options.SlidingExpiration = true;
-            });
             services.AddDbContext<TicketManagerContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TicketsDatabase")));
             services.AddTransient<ITicketRepository, TicketRepository>();
             services.AddControllersWithViews();
@@ -148,17 +123,17 @@ namespace Tickets
                 await UserManager.CreateAsync(user, "Pa55w.rd");
             }
             await UserManager.AddToRoleAsync(user, "Admin");
-            ApplicationUser user1 = await UserManager.FindByEmailAsync("daria@wp.pl");
-            if (user1 == null)
+            user = await UserManager.FindByEmailAsync("daria@wp.pl");
+            if (user == null)
             {
-                user1 = new ApplicationUser()
+                user = new ApplicationUser()
                 {
                     UserName = "daria@wp.pl",
                     Email = "daria@wp.pl",
                 };
-                await UserManager.CreateAsync(user1, "Pa55w.rd");
+                await UserManager.CreateAsync(user, "Pa55w.rd");
             }
-            await UserManager.AddToRoleAsync(user1, "User");
+            await UserManager.AddToRoleAsync(user, "User");
 
 
 

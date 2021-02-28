@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 using Tickets.Data;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Tickets.Areas.Identity.Pages.Account
 {
@@ -81,11 +77,11 @@ namespace Tickets.Areas.Identity.Pages.Account
             
             if (Input.Email == "dariawisniewska575@gmail.com")
             {
-                returnUrl = returnUrl ?? Url.Content("~/Admin/Index");
+                returnUrl ??= Url.Content("~/Admin/Index");
             }
             else
             {
-                returnUrl = returnUrl ?? Url.Content("~/User/Index");
+                returnUrl ??= Url.Content("~/User/Index");
             }
             if (ModelState.IsValid)
             {
